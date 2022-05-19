@@ -1,26 +1,44 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import "./App.css";
+import Counter from "./features/counter/Counter";
+
+import createSagaMiddleware from "redux-saga";
+import { counterSlice } from "./features/counter/counterSlice";
+import rootSaga from "./saga";
+import { configureStore, getDefaultMiddleware } from "@reduxjs/toolkit";
+
+const sagaMiddleware = createSagaMiddleware();
+export const store = configureStore({
+  reducer: counterSlice.reducer,
+  middleware: [
+    ...getDefaultMiddleware({ thunk: false, serializableCheck: false }),
+    sagaMiddleware,
+  ],
+  devTools: true,
+});
+
+sagaMiddleware.run(rootSaga);
+
+export type RootState = ReturnType<typeof store.getState>;
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Counter
+      // count={store.getState().value}
+      // increment={() => action("INCREMENT")}
+      // decrement={() => action("DECREMENT")}
+      />
     </div>
   );
 }
 
 export default App;
+
+// export const store = createStore(
+//   counterSlice.reducer,
+//   applyMiddleware(sagaMiddleware)
+// );
+// sagaMiddleware.run(rootSaga);
+
+// const action = (type: string) => store.dispatch({ type });
+// const sagaMiddleware = saga();
