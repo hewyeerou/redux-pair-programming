@@ -15,7 +15,7 @@ export function* watchIncrementAsync() {
   yield takeEvery('INCREMENT_ASYNC', incrementAsync);
 }
 
-export default function* rootSaga() {
+export default function* counterSaga() {
   yield all([
     watchIncrementAsync()
   ])
