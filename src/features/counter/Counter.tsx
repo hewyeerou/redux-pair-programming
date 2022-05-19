@@ -1,12 +1,12 @@
-import { useAppSelector } from "../../hooks";
+import { useAppSelector } from "./hooks/hooks";
 import { useDispatch } from "react-redux";
-import { increment, decrement, incrementByAmount } from "./counterSlice";
+import { increment, decrement, incrementByAmount } from "./reducers/counterSlice";
 import { createAction } from "@reduxjs/toolkit";
 
 export const asyncIncrement = createAction('INCREMENT_ASYNC');
 
 const Counter = () =>  {
-  const count = useAppSelector((state) => state.value);
+  const count = useAppSelector((state) => state.counter.value);
   const dispatch = useDispatch();
 
 
